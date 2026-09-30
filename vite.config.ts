@@ -1,9 +1,4 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - TanStack devtools (dev-only, first), tanstackStart, viteReact, tailwindcss, tsConfigPaths,
-//     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
-//     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
+// Vite configuration for SortLab Benchmark Studio (TanStack Start + Nitro)
 import { defineConfig } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
@@ -22,7 +17,11 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths(),
     viteReact(),
-    // Builds the server output; harmless to include in dev.
-    nitro(),
+    // Builds the server output; auto-detects Vercel, Netlify, or NITRO_PRESET
+    nitro({
+      preset:
+        process.env.NITRO_PRESET ||
+        (process.env.VERCEL ? "vercel" : process.env.NETLIFY ? "netlify" : undefined),
+    }),
   ],
 });

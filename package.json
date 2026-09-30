@@ -1,5 +1,5 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "sortlab",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -12,6 +12,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.69",
+    "@ai-sdk/google": "^4.0.86",
+    "@ai-sdk/openai": "^4.0.82",
     "@ai-sdk/openai-compatible": "^3.0.47",
     "@ai-sdk/react": "^4.0.100",
     "@hookform/resolvers": "^5.2.2",

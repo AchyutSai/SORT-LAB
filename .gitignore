@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 .output
+.vercel
+.netlify
 .vinxi
 .tanstack/**
 .nitro
@@ -19,6 +21,7 @@ dist-ssr
 # Env files (contains Supabase keys)
 .env
 .env.*
+!.env.example
 
 # Wrangler / Cloudflare
 .wrangler/

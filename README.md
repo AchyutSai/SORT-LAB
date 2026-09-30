@@ -1,143 +1,119 @@
-# SORTING ALGORITHM BENCHMARK
+# SortLab — Sorting Algorithm Benchmark Studio
 
-create a web app for sorting algorithms benchmark  # Role & Goal
+A modern, high-performance web studio for running, measuring, analyzing, and visualizing sorting algorithms in the browser using Web Workers, interactive 2D/3D visualizations, and theoretical Big-O curve fitting.
 
-You are a Principal Software Engineer and UI/UX Designer. Build a complete, production-grade **Sorting Algorithm Benchmark Web App** that allows users to run, compare, measure, and plot execution times of various sorting algorithms against custom array sizes, distributions, and configurations.
+![SortLab Preview](/public/og-sortlab.jpg)
 
----
+## Features
 
-## 1. Tech Stack Requirements
-
-* **Frontend:** React (TypeScript), Tailwind CSS, Lucide Icons.
-
-* **Charting:** Chart.js or Recharts (for dynamic $O(n \log n)$ vs $O(n^2)$ interactive plots).
-
-* **Worker Threads:** Web Workers (execute sorting algorithms off the main thread to prevent UI freezing during large array benchmarks).
-
-* **Database & Backend (BaaS):** Supabase or Firebase (PostgreSQL-backed for user profiles, saved benchmark runs, and global leaderboards).
-
-* **Styling/Animations:** Framer Motion with Tailwind CSS for glassmorphism and ambient glow effects.
-
----
-
-## 2. UI/UX & Visual Design Specs
-
-* **Aesthetic Theme:** Modern Cyberpunk / Dark Glassmorphism.
-
-  * *Background:* Ambient floating canvas particles, deep slate (`#0B0F17`) background with subtle neon radial gradients (Cyan `#00f2fe` and Violet `#4facfe`).
-
-  * *Glass Panels:* `backdrop-blur-md`, subtle border glow, dark semi-transparent cards (`rgba(15, 23, 42, 0.75)`).
-
-* **Dashboard Layout:**
-
-  * **Header:** App title, global execution controls, theme toggle, and database sync status indicator.
-
-  * **Sidebar / Control Panel:** 
-
-    * Algorithm Selector (Checkbox grid: Quick Sort, Merge Sort, Heap Sort, Bubble Sort, Insertion Sort, Selection Sort, Radix Sort, Tim Sort).
-
-    * Array Configuration Controls:
-
-      * Input Size Slider ($N = 100$ to $N = 100,000$).
-
-      * Step Size / Test Increments (e.g., test every 1,000 elements).
-
-      * Data Distribution selector: *Random*, *Nearly Sorted*, *Reversed*, *Few Unique Elements*.
-
-    * Benchmark Execution Buttons: "Run Benchmark", "Pause", "Reset".
-
-  * **Main Display Area:**
-
-    * **Interactive Execution Plot:** Line chart displaying Array Size ($N$) on the X-axis and Time in Milliseconds ($ms$) on the Y-axis. Toggleable log/linear scales.
-
-    * **Live Visualizer (Canvas):** Real-time array sorting animation lane showing real-time array state during benchmarking runs.
-
-    * **Analytics Metrics Grid:** Display Big-O complexities (Time & Space), Peak Memory Consumption, Array Swaps count, and Comparisons count.
+- **Non-Blocking Web Worker Engine**: High-resolution `performance.now()` precision benchmarking off the main thread with real-time progress and pause/resume support.
+- **8 Sorting Algorithms**: Quick Sort, Merge Sort, Heap Sort, Tim Sort, Radix Sort, Bubble Sort, Insertion Sort, Selection Sort.
+- **Dynamic Data Distributions**:
+  - *Random*: Uniform distribution.
+  - *Nearly Sorted*: 90% sorted with 10% random swaps.
+  - *Reversed*: Strictly descending order (worst-case for simple pivots).
+  - *Few Unique*: High-frequency duplicate distribution.
+  - *Custom Mode*: Direct numerical input and testing for arrays of 2–64 elements.
+- **Interactive Execution Plots**: Recharts line plot showing Execution Time ($ms$) vs Array Size ($N$) with log/linear scale switches, theoretical Big-O overlays, and high-res PNG export.
+- **Step-Through 2D & 3D Visualizer**:
+  - Replay individual sorting steps with comparison/write highlight states.
+  - 3D interactive Three.js bar chart with drag-to-rotate orbital camera.
+  - Granular step controls, scrub sliders, and playback speed adjustments.
+- **Empirical Verdict & Metrics**:
+  - Automatic detection of the winning algorithm and runner-up for any distribution.
+  - Fitted empirical growth exponent ($t \sim N^b$).
+  - Full metrics grid (comparisons, swaps, heap delta, stability, in-place behavior, exact TypeScript source code).
+  - CSV export for measured data points.
+- **Benchmark Comparison**: Side-by-side run comparison with speed delta tables and dual execution charts.
+- **Global Leaderboard**: Community benchmark ranking by measured throughput ($\text{elements} / \text{ms}$).
+- **AI Assistant**: Embedded conversational assistant specializing in algorithm complexity, sorting behavior, and benchmark interpretation.
+- **Cloud Sync & Local Fallback**: Authenticated cloud storage via Supabase with automatic `localStorage` recovery for offline/guest use.
 
 ---
 
-## 3. Core Engine & Technical Specifications
+## Tech Stack
 
-### A. Non-Blocking Benchmarking (Web Workers)
-
-* Write pure TypeScript implementations for the following algorithms:
-
-  * $O(n^2)$: Bubble Sort, Selection Sort, Insertion Sort.
-
-  * $O(n \log n)$: Quick Sort, Merge Sort, Heap Sort.
-
-  * Non-Comparison: Radix Sort.
-
-* Run algorithm iterations inside **Web Workers** using high-resolution timestamps (`performance.now()`).
-
-* Calculate mean execution times over multiple runs (e.g., average of 3 runs per step) to eliminate micro-benchmarking anomalies.
-
-### B. Dynamic Data Distribution Generators
-
-Provide utility functions to seed arrays:
-
-1. `Random`: Uniform distribution.
-
-2. `Nearly Sorted`: 90% sorted with 10% random swaps.
-
-3. `Reversed`: Strictly descending arrays.
-
-4. `Duplicates`: Array with high frequency of identical values.
+- **Framework**: [React 19](https://react.dev/), [TanStack Start](https://tanstack.com/start), [TanStack Router](https://tanstack.com/router)
+- **State & Data Fetching**: [TanStack Query (React Query)](https://tanstack.com/query)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with Cyberpunk / Dark Glassmorphism aesthetics
+- **UI Components**: [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/), [Sonner](https://sonner.emilkowal.ski/)
+- **Visuals & 3D**: [Three.js](https://threejs.org/), [Recharts](https://recharts.org/), [Motion](https://motion.dev/)
+- **Backend / Database**: [Supabase](https://supabase.com/) (PostgreSQL with Row Level Security)
+- **AI Integration**: [Vercel AI SDK](https://sdk.vercel.ai/) (`ai`, `@ai-sdk/react`, `@ai-sdk/openai-compatible`)
+- **Runtime & Bundler**: [Bun](https://bun.sh) / [Node.js](https://nodejs.org), [Vite 8](https://vitejs.dev/) & [Nitro](https://nitro.unjs.io/)
 
 ---
 
-## 4. Database Setup & Persistence (Supabase / PostgreSQL)
+## Getting Started
 
-Design and set up a Supabase client schema:
+### Prerequisites
 
-```sql
+- [Node.js 20+](https://nodejs.org/) or [Bun](https://bun.sh/)
+- A Supabase project (for authentication, leaderboard, and cloud run saving)
 
--- Benchmark Results Storage
+### Installation
 
-CREATE TABLE benchmark_runs (
-
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-
-    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-
-    run_name VARCHAR(100) NOT NULL,
-
-    array_distribution VARCHAR(50) NOT NULL,
-
-    max_input_size INT NOT NULL,
-
-    step_size INT NOT NULL,
-
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-
-);
-
-CREATE TABLE benchmark_metrics (
-
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-
-    run_id UUID REFERENCES benchmark_runs(id) ON DELETE CASCADE,
-
-    algorithm_name VARCHAR(50) NOT NULL,
-
-    input_size INT NOT NULL,
-
-    execution_time_ms FLOAT NOT NULL,
-
-    comparisons BIGINT,
-
-    swaps BIGINT
-
-);
-```
-
-## Development
-
-You need [Bun](https://bun.sh) installed.
-
-```sh
+```bash
+# Clone the repository
 git clone https://github.com/Achyut-sai/speed-sort-lab.git
 cd speed-sort-lab
+
+# Install dependencies
+npm install
+# or
 bun install
+```
+
+### Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL="https://your-project-id.supabase.co"
+VITE_SUPABASE_PUBLISHABLE_KEY="your-supabase-publishable-key"
+VITE_SUPABASE_PROJECT_ID="your-project-id"
+
+# Server-Side Supabase Keys (for SSR & admin actions)
+SUPABASE_URL="https://your-project-id.supabase.co"
+SUPABASE_PUBLISHABLE_KEY="your-supabase-publishable-key"
+SUPABASE_SERVICE_ROLE_KEY="your-supabase-service-role-key"
+
+# AI Assistant (Optional)
+OPENAI_API_KEY="your-openai-or-compatible-api-key"
+AI_BASE_URL="https://api.openai.com/v1" # optional, defaults to OpenAI
+AI_MODEL="gpt-4o-mini"                 # optional, defaults to gpt-4o-mini
+```
+
+### Database Setup
+
+Apply the SQL migrations located in `supabase/migrations/` to your Supabase project:
+1. `supabase/migrations/20260821065709_bae81b98-6ff4-4189-8d66-7dc8bb2b29de.sql` (Profiles, runs, metrics, RLS)
+2. `supabase/migrations/20260821065737_4af68413-1854-4ce9-ac58-743139c0a431.sql` (Security hardening)
+3. `supabase/migrations/20260911151515_eb75f8cb-f8c0-410c-a243-59d99d209fd8.sql` (Chat threads and messages)
+
+### Development
+
+```bash
+npm run dev
+# or
 bun run dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Building for Production
+
+```bash
+npm run build
+npm run preview
+# or
+bun run build
+bun run preview
+```
+
+---
+
+## License
+
+MIT

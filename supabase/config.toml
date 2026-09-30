@@ -1,1 +1,2 @@
-project_id = "ihusjxxxxhbdmeccwwcl"
+# Link your project with: npx supabase link --project-ref <your-project-ref>
+project_id = ""

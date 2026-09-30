@@ -37,11 +37,11 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:image",
-        content: "https://project--c1620739-805d-48b4-aac9-fbe98b60d876.lovable.app/og-sortlab.jpg",
+        content: "/og-sortlab.jpg",
       },
       {
         name: "twitter:image",
-        content: "https://project--c1620739-805d-48b4-aac9-fbe98b60d876.lovable.app/og-sortlab.jpg",
+        content: "/og-sortlab.jpg",
       },
     ],
   }),
