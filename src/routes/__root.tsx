@@ -80,15 +80,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "SortLab — Sorting Algorithm Benchmark" },
       { property: "og:description", content: "Benchmark and visualize sorting algorithms in the browser." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/sort_lab_icon.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@SortLab" },
+      { name: "twitter:image", content: "/sort_lab_icon.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/sort_lab_icon.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

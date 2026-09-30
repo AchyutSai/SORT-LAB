@@ -2,7 +2,7 @@
 
 A modern, high-performance web studio for running, measuring, analyzing, and visualizing sorting algorithms in the browser using Web Workers, interactive 2D/3D visualizations, and theoretical Big-O curve fitting.
 
-![SortLab Preview](/public/og-sortlab.jpg)
+![SortLab Preview](/public/sort_lab_icon.png)
 
 ## Features
 
