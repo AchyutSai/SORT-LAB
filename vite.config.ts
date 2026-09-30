@@ -14,14 +14,14 @@ export default defineConfig({
       // (our SSR error wrapper).
       start: { entry: "./src/server.ts" },
     }),
-    tailwindcss(),
-    tsConfigPaths(),
-    viteReact(),
     // Builds the server output; auto-detects Vercel, Netlify, or NITRO_PRESET
     nitro({
       preset:
         process.env.NITRO_PRESET ||
         (process.env.VERCEL ? "vercel" : process.env.NETLIFY ? "netlify" : undefined),
     }),
+    viteReact(),
+    tailwindcss(),
+    tsConfigPaths(),
   ],
 });
